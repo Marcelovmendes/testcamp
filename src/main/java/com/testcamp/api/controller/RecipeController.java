@@ -1,13 +1,21 @@
 package com.testcamp.api.controller;
 
+import com.testcamp.api.repositories.RecipeRepository;
 import org.springframework.web.bind.annotation.*;
+
+import java.util.List;
 
 @RestController
 @RequestMapping("/recipes")
 public class RecipeController {
+
+    final RecipeRepository recipeRepository;
+    RecipeController(RecipeRepository recipeRepository){
+        this.recipeRepository = recipeRepository;
+    }
    @GetMapping
-    public String getRecipe(){
-    return "Todas Receitas";
+    public List getRecipe(){
+    return recipeRepository.findAll();
     }
     @GetMapping("/{id}")
     public String getRecipesById(@PathVariable Long id){
