@@ -29,7 +29,7 @@ public class RecipeController {
     }
     @PostMapping
     public String createRecipe(@RequestBody String body){
-       return body;
+        return body;
     }
     @PutMapping("/{id}")
     public String updateRecipe(@PathVariable Long id,@RequestBody String body){
