@@ -6,12 +6,12 @@ import lombok.Data;
 @Data
 public class RecipeDTO {
 
-    @NotBlank
+    @NotBlank(message = "Title is mandatory")
     private String title;
 
-    @NotBlank
+    @NotBlank(message = "Ingredients is mandatory")
     private String ingredients;
 
-    @NotBlank
+    @NotBlank(message = "Steps is mandatory")
     private String steps;
 }

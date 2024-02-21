@@ -1,9 +1,12 @@
 package com.testcamp.api.models;
 
+import com.testcamp.api.dtos.RecipeDTO;
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
+
+import java.util.UUID;
 
 @Data
 @NoArgsConstructor
@@ -11,9 +14,14 @@ import lombok.NoArgsConstructor;
 @Entity
 @Table(name = "recipes")
 public class RecipeModel {
+   public  RecipeModel(RecipeDTO dto){
+        this.title = dto.getTitle();
+        this.ingredients = dto.getIngredients();
+        this.steps = dto.getSteps();
+    }
     @Id
-    @GeneratedValue(strategy = GenerationType.SEQUENCE)
-    private Long id;
+    @GeneratedValue(strategy = GenerationType.UUID)
+    private UUID id;
 
     @Column()
     private String title;
