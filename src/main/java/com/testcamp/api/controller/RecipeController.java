@@ -3,7 +3,10 @@ package com.testcamp.api.controller;
 import com.testcamp.api.dtos.RecipeDTO;
 import com.testcamp.api.models.RecipeModel;
 import com.testcamp.api.repositories.RecipeRepository;
+import com.testcamp.api.services.RecipeService;
 import jakarta.validation.Valid;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
@@ -13,39 +16,41 @@ import java.util.UUID;
 @RestController
 @RequestMapping("/recipes")
 public class RecipeController {
-    final RecipeRepository recipeRepository;
-    RecipeController(RecipeRepository recipeRepository){
-        this.recipeRepository = recipeRepository;
+    final RecipeService recipeService;
+    RecipeController(RecipeService recipeService){
+        this.recipeService = recipeService;
     }
    @GetMapping
-    public List getRecipe(){
-    return recipeRepository.findAll();
+    public ResponseEntity<List<RecipeModel>> getRecipes(){
+        List<RecipeModel> recipes = recipeService.findAll();
+    return  ResponseEntity.status(HttpStatus.OK).body(recipes);
     }
     @GetMapping("/{id}")
-    public Optional<RecipeModel> getRecipesById(@PathVariable UUID id){
-        Optional<RecipeModel> recipe = recipeRepository.findById(id);
+    public ResponseEntity<Object> getRecipesById(@PathVariable UUID id){
+        Optional<RecipeModel> recipe = recipeService.findById(id);
         if(!recipe.isPresent()){
-            return Optional.empty();
+           return ResponseEntity.status(HttpStatus.NOT_FOUND).body("Recipe not found");
         }
-        return recipe;
+        return ResponseEntity.ok(recipe);
     }
     @PostMapping
-    public RecipeModel createRecipe(@RequestBody @Valid RecipeDTO body){
-        RecipeModel recipe = new RecipeModel(body);
-       return recipeRepository.save(recipe);
+    public ResponseEntity<RecipeModel> createRecipe(@RequestBody @Valid RecipeDTO body){
+        return ResponseEntity.ok(recipeService.save(body));
     }
     @PutMapping("/{id}")
-    public RecipeModel updateRecipe(@PathVariable UUID id, @RequestBody @Valid RecipeDTO body){
-       Optional<RecipeModel> recipe = recipeRepository.findById(id);
+    public ResponseEntity<Object> updateRecipe(@PathVariable UUID id, @RequestBody @Valid RecipeDTO body){
+       Optional<RecipeModel> recipe = recipeService.findById(id);
        if(!recipe.isPresent()){
-
+        return ResponseEntity.status(HttpStatus.NOT_FOUND).body("Recipe not found");
        }
-       RecipeModel newRecipe = new RecipeModel(body);
-       newRecipe.setId(id);
-       return recipeRepository.save(newRecipe);
+       return ResponseEntity.ok(recipeService.save(body));
     }
     @DeleteMapping("/{id}")
-    public Valid deleteRecipe(@PathVariable UUID id){
-        recipeRepository.deleteById(id);
+    public ResponseEntity deleteRecipe(@PathVariable UUID id){
+        Optional<RecipeModel> recipe = recipeService.findById(id);
+        if(!recipe.isPresent()){
+            return ResponseEntity.status(HttpStatus.NOT_FOUND).body("Recipe not found");
+        }
+       return ResponseEntity.status(HttpStatus.OK).build();
     }
 }
