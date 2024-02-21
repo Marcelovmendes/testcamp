@@ -9,5 +9,4 @@ import java.util.UUID;
 @Repository
 public interface RecipeRepository extends JpaRepository<RecipeModel, UUID> {
     boolean existsByTitle(String title);
-    boolean existsBy
 }

@@ -34,8 +34,12 @@ public class RecipeController {
         return ResponseEntity.ok(recipe);
     }
     @PostMapping
-    public ResponseEntity<RecipeModel> createRecipe(@RequestBody @Valid RecipeDTO body){
-        return ResponseEntity.ok(recipeService.save(body));
+    public ResponseEntity<Object> createRecipe(@RequestBody @Valid RecipeDTO body){
+        Optional<RecipeModel> recipe = recipeService.save(body);
+        if(!recipe.isPresent()){
+           return ResponseEntity.status(HttpStatus.CONFLICT).body("A recipe with this title already exists");
+        }
+        return ResponseEntity.ok(recipe);
     }
     @PutMapping("/{id}")
     public ResponseEntity<Object> updateRecipe(@PathVariable UUID id, @RequestBody @Valid RecipeDTO body){

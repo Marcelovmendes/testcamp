@@ -23,9 +23,12 @@ public class RecipeService {
     public Optional<RecipeModel> findById(UUID id){
         return recipeRepository.findById(id);
     }
-    public RecipeModel save( RecipeDTO body){
+    public Optional<RecipeModel> save( RecipeDTO body){
+        if(recipeRepository.existsByTitle(body.getTitle())){
+            return Optional.empty();
+        }
         RecipeModel recipe = new RecipeModel(body);
-        return recipeRepository.save(recipe);
+        return Optional.of(recipeRepository.save(recipe));
     }
     public RecipeModel update(RecipeDTO body, UUID id){
         RecipeModel newRecipe = new RecipeModel(body);
