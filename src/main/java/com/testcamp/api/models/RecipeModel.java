@@ -21,6 +21,14 @@ public class RecipeModel {
         this.user = new UserModel();
         this.user.setId(dto.getUserId());
     }
+    public  RecipeModel(RecipeDTO dto,UserModel user){
+        this.title = dto.getTitle();
+        this.ingredients = dto.getIngredients();
+        this.steps = dto.getSteps();
+        this.user = user;
+
+    }
+
     @Id
     @GeneratedValue(strategy = GenerationType.SEQUENCE)
     private Long id;
