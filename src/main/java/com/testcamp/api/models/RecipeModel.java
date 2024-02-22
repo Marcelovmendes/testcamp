@@ -18,6 +18,8 @@ public class RecipeModel {
         this.title = dto.getTitle();
         this.ingredients = dto.getIngredients();
         this.steps = dto.getSteps();
+        this.user = new UserModel();
+        this.user.setId(dto.getUserId());
     }
     @Id
     @GeneratedValue(strategy = GenerationType.SEQUENCE)

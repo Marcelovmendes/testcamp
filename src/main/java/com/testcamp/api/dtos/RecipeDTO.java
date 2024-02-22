@@ -3,6 +3,8 @@ package com.testcamp.api.dtos;
 import jakarta.validation.constraints.NotBlank;
 import lombok.Data;
 
+import java.util.UUID;
+
 @Data
 public class RecipeDTO {
 
@@ -14,4 +16,7 @@ public class RecipeDTO {
 
     @NotBlank(message = "Steps is mandatory")
     private String steps;
+
+    @NotBlank
+    private UUID userId;
 }
