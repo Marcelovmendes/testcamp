@@ -26,7 +26,7 @@ public class RecipeController {
     return  ResponseEntity.status(HttpStatus.OK).body(recipes);
     }
     @GetMapping("/{id}")
-    public ResponseEntity<Object> getRecipesById(@PathVariable UUID id){
+    public ResponseEntity<Object> getRecipesById(@PathVariable Long id){
         Optional<RecipeModel> recipe = recipeService.findById(id);
         if(!recipe.isPresent()){
            return ResponseEntity.status(HttpStatus.NOT_FOUND).body("Recipe not found");
@@ -42,7 +42,7 @@ public class RecipeController {
         return ResponseEntity.ok(recipe);
     }
     @PutMapping("/{id}")
-    public ResponseEntity<Object> updateRecipe(@PathVariable UUID id, @RequestBody @Valid RecipeDTO body){
+    public ResponseEntity<Object> updateRecipe(@PathVariable Long id, @RequestBody @Valid RecipeDTO body){
        Optional<RecipeModel> recipe = recipeService.findById(id);
        if(!recipe.isPresent()){
         return ResponseEntity.status(HttpStatus.NOT_FOUND).body("Recipe not found");
@@ -50,7 +50,7 @@ public class RecipeController {
        return ResponseEntity.ok(recipeService.save(body));
     }
     @DeleteMapping("/{id}")
-    public ResponseEntity deleteRecipe(@PathVariable UUID id){
+    public ResponseEntity deleteRecipe(@PathVariable Long id){
         Optional<RecipeModel> recipe = recipeService.findById(id);
         if(!recipe.isPresent()){
             return ResponseEntity.status(HttpStatus.NOT_FOUND).body("Recipe not found");

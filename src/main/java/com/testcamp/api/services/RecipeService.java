@@ -20,7 +20,7 @@ public class RecipeService {
     public List<RecipeModel> findAll(){
         return recipeRepository.findAll();
     }
-    public Optional<RecipeModel> findById(UUID id){
+    public Optional<RecipeModel> findById(Long id){
         return recipeRepository.findById(id);
     }
     public Optional<RecipeModel> save( RecipeDTO body){
@@ -30,12 +30,12 @@ public class RecipeService {
         RecipeModel recipe = new RecipeModel(body);
         return Optional.of(recipeRepository.save(recipe));
     }
-    public RecipeModel update(RecipeDTO body, UUID id){
+    public RecipeModel update(RecipeDTO body, Long id){
         RecipeModel newRecipe = new RecipeModel(body);
         newRecipe.setId(id);
         return recipeRepository.save(newRecipe);
     }
-    public Optional<RecipeModel> delete(UUID id){
+    public Optional<RecipeModel> delete(Long id){
        return recipeRepository.findById(id);
 
     }

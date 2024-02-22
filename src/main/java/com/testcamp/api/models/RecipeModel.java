@@ -20,8 +20,8 @@ public class RecipeModel {
         this.steps = dto.getSteps();
     }
     @Id
-    @GeneratedValue(strategy = GenerationType.UUID)
-    private UUID id;
+    @GeneratedValue(strategy = GenerationType.SEQUENCE)
+    private Long id;
 
     @Column()
     private String title;
@@ -31,5 +31,9 @@ public class RecipeModel {
 
     @Column()
     private String steps;
+
+    @ManyToOne
+    @JoinColumn(name = "userId")
+    private UserModel user;
 
 }

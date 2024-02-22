@@ -7,6 +7,6 @@ import org.springframework.stereotype.Repository;
 import java.util.UUID;
 
 @Repository
-public interface RecipeRepository extends JpaRepository<RecipeModel, UUID> {
+public interface RecipeRepository extends JpaRepository<RecipeModel, Long> {
     boolean existsByTitle(String title);
 }
