@@ -3,6 +3,7 @@ package com.testcamp.api.dtos;
 import jakarta.validation.constraints.NotBlank;
 import lombok.Data;
 
+import java.util.List;
 import java.util.UUID;
 
 @Data
@@ -19,4 +20,7 @@ public class RecipeDTO {
 
     @NotBlank
     private UUID userId;
+
+    private List<Long> categoryIds;
+
 }

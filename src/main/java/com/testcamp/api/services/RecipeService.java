@@ -1,8 +1,10 @@
 package com.testcamp.api.services;
 
 import com.testcamp.api.dtos.RecipeDTO;
+import com.testcamp.api.models.CategoryModel;
 import com.testcamp.api.models.RecipeModel;
 import com.testcamp.api.models.UserModel;
+import com.testcamp.api.repositories.CategoryRepository;
 import com.testcamp.api.repositories.RecipeRepository;
 import com.testcamp.api.repositories.UserRepository;
 import org.springframework.stereotype.Service;
@@ -13,13 +15,15 @@ import java.util.UUID;
 
 @Service
 public class RecipeService {
-    final RecipeRepository recipeRepository; // instancia do repositorio
+    final RecipeRepository recipeRepository;
     final UserRepository userRepository;
+    final CategoryRepository categoryRepository;
 
 
-    RecipeService(RecipeRepository recipeRepository, UserRepository userRepository){
+    RecipeService(RecipeRepository recipeRepository, UserRepository userRepository, CategoryRepository categoryRepository){
         this.recipeRepository = recipeRepository;
         this.userRepository = userRepository;
+        this.categoryRepository= categoryRepository;
     }
     public List<RecipeModel> findAll(){
         return recipeRepository.findAll();
@@ -35,7 +39,9 @@ public class RecipeService {
         if(!user.isPresent()){
             return Optional.empty();
         }
-        RecipeModel recipe = new RecipeModel(body, user.get());
+        List<CategoryModel> categories = categoryRepository.findAllById(body.getCategoryIds());
+        RecipeModel recipe = new RecipeModel(body, user.get(), categories);
+
         return Optional.of(recipeRepository.save(recipe));
     }
     public RecipeModel update(RecipeDTO body, Long id){

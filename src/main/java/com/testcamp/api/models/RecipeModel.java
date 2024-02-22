@@ -20,11 +20,12 @@ public class RecipeModel {
         this.user = new UserModel();
         this.user.setId(dto.getUserId());
     }
-    public  RecipeModel(RecipeDTO dto,UserModel user){
+    public  RecipeModel(RecipeDTO dto,UserModel user, List<CategoryModel> categories){
         this.title = dto.getTitle();
         this.ingredients = dto.getIngredients();
         this.steps = dto.getSteps();
         this.user = user;
+        this.categories = categories;
 
     }
 
@@ -44,6 +45,8 @@ public class RecipeModel {
     @ManyToOne
     @JoinColumn(name = "userId")
     private UserModel user;
+
+
     @ManyToMany
     @JoinTable(
             name = "recipe_category",
