@@ -5,7 +5,6 @@ import com.testcamp.api.models.RecipeModel;
 import com.testcamp.api.models.UserModel;
 import com.testcamp.api.repositories.RecipeRepository;
 import com.testcamp.api.repositories.UserRepository;
-import jakarta.validation.Valid;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
@@ -46,6 +45,5 @@ public class RecipeService {
     }
     public Optional<RecipeModel> delete(Long id){
        return recipeRepository.findById(id);
-
     }
 }

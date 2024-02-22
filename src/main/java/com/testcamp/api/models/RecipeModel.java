@@ -6,8 +6,7 @@ import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
-import java.util.UUID;
-
+import java.util.List;
 @Data
 @NoArgsConstructor
 @AllArgsConstructor
@@ -45,5 +44,11 @@ public class RecipeModel {
     @ManyToOne
     @JoinColumn(name = "userId")
     private UserModel user;
-
+    @ManyToMany
+    @JoinTable(
+            name = "recipe_category",
+            joinColumns = @JoinColumn(name = "recipeId"),
+            inverseJoinColumns = @JoinColumn(name= "categoryId")
+    )
+    private List<CategoryModel> categories;
 }
