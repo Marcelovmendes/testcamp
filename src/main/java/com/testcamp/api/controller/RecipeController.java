@@ -26,7 +26,7 @@ public class RecipeController {
     return  ResponseEntity.status(HttpStatus.OK).body(recipes);
     }
     @GetMapping("/{id}")
-    public ResponseEntity<Object> getRecipesById(@PathVariable Long id){
+    public ResponseEntity<?> getRecipesById(@PathVariable Long id){
         Optional<RecipeModel> recipe = recipeService.findById(id);
         if(!recipe.isPresent()){
            return ResponseEntity.status(HttpStatus.NOT_FOUND).body("Recipe not found");
